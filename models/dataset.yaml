@@ -1,0 +1,12 @@
+
+names:
+  - b_fully_ripened
+  - b_half_ripened
+  - b_green
+  - l_fully_ripened
+  - l_half_ripened
+  - l_green
+nc: 6
+path: /content/working
+train: /content/working/train/images
+val: /content/working/val/images

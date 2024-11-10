@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clasificación de Tomates</title>
+    <link rel="icon" href="static/images/icono.ico" type="image/x-icon">
+    <style>
+        /* Fondo de imagen difuminada solo en el fondo de la página */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            color: #333;
+            background-image: url('static/fondo.jpg'); /* Ruta de la imagen */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+
+        /* Fondo difuminado para no interferir con los elementos */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.65); /* Ajusta la opacidad */
+            backdrop-filter: blur(8px); /* Desenfoque de fondo */
+            z-index: 1;
+        }
+
+        /* Contenedor de subida */
+        .upload-container {
+            background-color: #ffffff; /* Fondo blanco para el recuadro */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            margin: 20px auto;
+            position: relative; /* Asegura que el contenido esté sobre el fondo difuminado */
+            z-index: 2;
+        }
+
+        /* Estilo del título dentro del recuadro blanco */
+        .upload-container h1 {
+            color: #4CAF50;
+            font-size: 2.5em;
+            margin-top: 0; /* Elimina el margen superior */
+            margin-bottom: 20px; /* Añade espacio debajo del título */
+        }
+
+        /* Estilo de los inputs y botones */
+        .upload-container input[type="file"] {
+            display: block;
+            margin: 15px auto;
+        }
+
+        .upload-container button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 10px;
+        }
+
+        .upload-container button:hover {
+            background-color: #45A049;
+        }
+
+        /* Estilo de la vista previa de la imagen */
+        .image-preview, #video {
+            margin-top: 20px;
+            max-width: 100%;
+            max-height: 200px;
+            object-fit: cover; /* Asegura que la imagen se recorte de forma adecuada */
+        }
+    </style>
+</head>
+<body>
+    <div class="upload-container">
+        <!-- Título dentro del recuadro blanco -->
+        <h1>Clasificación de Tomates</h1>
+
+        <form action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
+            <input type="file" name="image" accept="image/*" required id="imageInput">
+            <!-- Elemento de vista previa de la imagen -->
+            <img id="imagePreview" class="image-preview" src="" alt="">
+            <button type="submit">Clasificar</button>
+        </form>
+    </div>
+    <script>
+        // Obtener el input de imagen y el elemento de vista previa
+        const imageInput = document.getElementById('imageInput');
+        const imagePreview = document.getElementById('imagePreview');
+    
+        // Escuchar el evento de cambio en el input de archivo
+        imageInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];  // Obtener el primer archivo seleccionado
+    
+            if (file) {
+                // Crear un objeto URL para la imagen seleccionada
+                const reader = new FileReader();
+    
+                reader.onload = function(e) {
+                    // Establecer el src de la imagen de vista previa al contenido leído
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block'; // Mostrar la imagen de vista previa
+                }
+    
+                // Leer el archivo como una URL de datos (base64)
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+    
+</body>
+</html>
