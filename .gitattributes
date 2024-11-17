@@ -1,1 +1,4 @@
 *.pt filter=lfs diff=lfs merge=lfs -text
+models/yolov8x.pt filter=lfs diff=lfs merge=lfs -text
+models/runs/detect/train/weights/best.pt filter=lfs diff=lfs merge=lfs -text
+models/runs/detect/train/weights/last.pt~ filter=lfs diff=lfs merge=lfs -text
